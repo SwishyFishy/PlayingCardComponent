@@ -54,10 +54,7 @@ function Card({img = undefined, dimensions = {width: 63, height: 88, units: "mm"
         document.onmousemove = (move: MouseEvent) => {dragCard(move)};
 
         // Create an event handler to free the move event handler when the mouse button is released
-        document.onmouseup = () => {
-            document.onmousemove = null;
-            document.onmouseup = null;
-        }
+        document.onmouseup = releaseCard;
     }
 
     // Move the card around
@@ -66,6 +63,12 @@ function Card({img = undefined, dimensions = {width: 63, height: 88, units: "mm"
 
         // Move the card to the mouse
         setCardStyle({...cardStyle, top: e.clientY - offsetY, left: e.clientX - offsetX})
+    }
+
+    // Release the card
+    const releaseCard = () => {
+        document.onmousemove = null;
+        document.onmouseup = null;
     }
 
     return(
