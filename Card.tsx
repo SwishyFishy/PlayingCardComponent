@@ -10,19 +10,22 @@ interface props_Card {
         height: number,
         units: "mm" | "px" | "rem" | "%"
     }
+    position?: {
+        x: number,
+        y: number
+    }
 }
 
-function Card({img = undefined, dimensions = {width: 63, height: 88, units: "mm"}, children = undefined}: PropsWithChildren<props_Card>)
+function Card({img = undefined, dimensions = {width: 63, height: 88, units: "mm"}, position = {x: 0, y: 0}, children = undefined}: PropsWithChildren<props_Card>)
 {
+    // Object which holds all the data for the style attribute of this element
     type CardStyle = {
         top: number,
         left: number,
         width?: string,
         height?: string
     }
-
-    // Object which holds all the data for the style attribute of this element
-    const [cardStyle, setCardStyle] = useState<CardStyle>({top: 0, left: 0});
+    const [cardStyle, setCardStyle] = useState<CardStyle>({top: position.y, left: position.x});
 
     // Variables for tracking which part of the card the user grabbed
     let offsetX: number = 0;
