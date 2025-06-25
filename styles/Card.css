@@ -1,3 +1,11 @@
 .card{
-    border: 1em solid red;
+    position: absolute;
+
+    width: 63mm;
+    height: 88mm;
+
+    background-color: aqua;
+
+    border: .5em solid black;
+    border-radius: .5em;
 }
