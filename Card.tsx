@@ -3,15 +3,13 @@ import { type PropsWithChildren } from 'react';
 
 import './styles/Card.css';
 
-type CardDimensions = {
-    width: number,
-    height: number,
-    units: "mm" | "px" | "rem" | "%"
-}
-
 interface props_Card {
     img?: string,
-    dimensions?: CardDimensions
+    dimensions?: {
+        width: number,
+        height: number,
+        units: "mm" | "px" | "rem" | "%"
+    }
 }
 
 function Card({img = undefined, dimensions = {width: 63, height: 88, units: "mm"}, children = undefined}: PropsWithChildren<props_Card>)
