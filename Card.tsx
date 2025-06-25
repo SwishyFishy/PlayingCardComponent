@@ -1,8 +1,13 @@
 import { useState } from 'react';
+import { type PropsWithChildren } from 'react';
 
 import './styles/Card.css';
 
-function Card()
+interface props_Card {
+    img?: string
+}
+
+function Card({img = undefined, children = undefined}: PropsWithChildren<props_Card>)
 {
     // Track card position in state
     const [cardPos, setCardPos] = useState<{top: number, left: number}>({top: 0, left: 0});
@@ -36,7 +41,10 @@ function Card()
     }
 
     return(
-        <div className="card" onMouseDown={(click: any) => {grabCard(click)}} style={{...cardPos}}></div>
+        <div className="card" onMouseDown={(click: any) => {grabCard(click)}} style={{...cardPos}}>
+            {img ? <img src={img} /> : ""}
+            {children ? children : ""}
+        </div>
     );
 }
 
