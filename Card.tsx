@@ -15,31 +15,33 @@ function Card()
         console.log("Grabbed");
 
         // Get cursor starting position
-        setMousePos({mouseX: e.clientX, mouseY: e.clientY});
+        setMousePos({mouseX: e.screenX, mouseY: e.screenY});
 
         // Create an event handler to call dragCard when the mouse moves
         document.onmousemove = (e: MouseEvent) => {dragCard(e)};
 
         // Create an event handler to free the move event handler when the mouse button is released
         document.onmouseup = () => {
+            console.log("Released");
+
             document.onmousemove = null;
             document.onmouseup = null;
         }
-
     }
 
     // Move the card around
     const dragCard = (e: MouseEvent) => {
         e.preventDefault();
 
+        console.log("Moved");
+
         // Move the card to the mouse and get the next mouse position
-        setCardPos({...cardPos, top: mousePos.mouseX, left: mousePos.mouseY});
-        setMousePos({mouseX: e.clientX, mouseY: e.clientY});
+        setCardPos({...cardPos, top: mousePos.mouseY, left: mousePos.mouseX});
+        setMousePos({...mousePos, mouseX: e.screenX, mouseY: e.screenY});
     }
 
     return(
-        <div className="card" onMouseDown={(e: any) => {grabCard(e)}} style={{...cardPos}}>
-        </div>
+        <div id="test" className="card" onMouseDown={(e: any) => {grabCard(e)}} style={{...cardPos}}></div>
     );
 }
 
