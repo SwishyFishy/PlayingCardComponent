@@ -4,12 +4,18 @@ import './styles/Card.css';
 
 function Card()
 {
-    // Track card and mouse position in state
+    // Track card position in state
     const [cardPos, setCardPos] = useState<{top: number, left: number}>({top: 0, left: 0});
+    let offsetX: number = 0;
+    let offsetY: number = 0;
 
     // Grab the card with the cursor
     const grabCard = (e: React.MouseEvent) => {
         e.preventDefault();
+
+        // Track the part of the card clicked
+        offsetX = e.clientX - cardPos.left;
+        offsetY = e.clientY - cardPos.top;
 
         // Create an event handler to call dragCard when the mouse moves
         document.onmousemove = (move: MouseEvent) => {dragCard(move)};
@@ -26,7 +32,7 @@ function Card()
         e.preventDefault();
 
         // Move the card to the mouse
-        setCardPos({...cardPos, top: e.clientY, left: e.clientX});
+        setCardPos({...cardPos, top: e.clientY - offsetY, left: e.clientX - offsetX});
     }
 
     return(
