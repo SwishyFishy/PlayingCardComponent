@@ -3,11 +3,18 @@ import { type PropsWithChildren } from 'react';
 
 import './styles/Card.css';
 
-interface props_Card {
-    img?: string
+type CardDimensions = {
+    width: number,
+    height: number,
+    units: string
 }
 
-function Card({img = undefined, children = undefined}: PropsWithChildren<props_Card>)
+interface props_Card {
+    img?: string,
+    dimensions?: CardDimensions
+}
+
+function Card({img = undefined, dimensions = undefined, children = undefined}: PropsWithChildren<props_Card>)
 {
     // Track card position in state
     const [cardPos, setCardPos] = useState<{top: number, left: number}>({top: 0, left: 0});
@@ -42,7 +49,7 @@ function Card({img = undefined, children = undefined}: PropsWithChildren<props_C
 
     return(
         <div className="card" onMouseDown={(click: any) => {grabCard(click)}} style={{...cardPos}}>
-            {img ? <img src={img} /> : ""}
+            {img ? <img src={img} className="card_img"/> : ""}
             {children ? children : ""}
         </div>
     );
