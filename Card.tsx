@@ -95,7 +95,7 @@ function Card({img = undefined, dimensions = {width: 63, height: 88, units: "mm"
             top: e.clientY - offsetY, 
             left: e.clientX - offsetX, 
             transform: `rotate3d(${speedY}, ${-speedX}, 0, ${tilt}deg)`,
-            'box-shadow': `${-speedX / tiltShadow}em ${-speedY / tiltShadow}em 1em black`
+            'box-shadow': `${-speedX / tiltShadow}rem ${-speedY / tiltShadow}rem 1em black`
         });
     }
 
@@ -104,12 +104,12 @@ function Card({img = undefined, dimensions = {width: 63, height: 88, units: "mm"
         document.onmousemove = null;
         document.onmouseup = null;
 
-        // Remove any leftover tilt
+        // Remove any leftover tilt and box-shadow
         setCardStyle({...cardStyle, top: e.clientY - offsetY, left: e.clientX - offsetX, transform: undefined, 'box-shadow': undefined});
     }
 
     return(
-        <div className="card" onMouseDown={(click: any) => {grabCard(click)}} style={{...cardStyle}}>
+        <div className="card" onMouseDown={(click: any) => {click.button == 0 ? grabCard(click) : () => {/*Placeholder*/}}} style={{...cardStyle}}>
             {img ? <img src={img} className="card_img"/> : ""}
             {children ? children : ""}
         </div>
