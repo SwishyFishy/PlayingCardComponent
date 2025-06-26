@@ -22,7 +22,8 @@ function Card({img = undefined, dimensions = {width: 63, height: 88, units: "mm"
     type CardStyle = {
         top: number,
         left: number,
-        transform?: string, 
+        transform?: string,
+        'box-shadow'?: string,
         width?: string,
         height?: string
     }
@@ -41,6 +42,7 @@ function Card({img = undefined, dimensions = {width: 63, height: 88, units: "mm"
     // Variable for tracking card angle in 3d space
     let tilt: number = 0;               // Angle of card in 3d space
     const tiltAmplifier: number = 2;    // Constant multiplied into tilt to exaggerate the angle
+    const tiltShadow: number = 20;      // Constant reciprocal multiplied into speed to adjust box-shadow to follow card
     const tiltMax: number = 45;         // Constant maximum allowable value of tilt * tiltAmplifier
 
     // Add user-defined styles to cardStyle
@@ -66,6 +68,8 @@ function Card({img = undefined, dimensions = {width: 63, height: 88, units: "mm"
         lastPosX = e.clientX - offsetX;
         lastPosY = e.clientY - offsetY;
 
+        setCardStyle({...cardStyle, 'box-shadow': `0em 0em 1em black`});
+
         // Create an event handler to call dragCard when the mouse moves
         document.onmousemove = (move: MouseEvent) => {dragCard(move)};
 
@@ -87,7 +91,12 @@ function Card({img = undefined, dimensions = {width: 63, height: 88, units: "mm"
         tilt = Math.min(tiltMax, tiltAmplifier * Math.abs(speedX) + Math.abs(speedY));
 
         // Move the card to the mouse
-        setCardStyle({...cardStyle, top: e.clientY - offsetY, left: e.clientX - offsetX, transform: `rotate3d(${speedY}, ${-speedX}, 0, ${tilt}deg)`});
+        setCardStyle({...cardStyle, 
+            top: e.clientY - offsetY, 
+            left: e.clientX - offsetX, 
+            transform: `rotate3d(${speedY}, ${-speedX}, 0, ${tilt}deg)`,
+            'box-shadow': `${-speedX / tiltShadow}em ${-speedY / tiltShadow}em 1em black`
+        });
     }
 
     // Release the card
@@ -96,7 +105,7 @@ function Card({img = undefined, dimensions = {width: 63, height: 88, units: "mm"
         document.onmouseup = null;
 
         // Remove any leftover tilt
-        setCardStyle({...cardStyle, top: e.clientY - offsetY, left: e.clientX - offsetX, transform: undefined});
+        setCardStyle({...cardStyle, top: e.clientY - offsetY, left: e.clientX - offsetX, transform: undefined, 'box-shadow': undefined});
     }
 
     return(
