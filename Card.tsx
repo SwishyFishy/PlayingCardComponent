@@ -23,7 +23,7 @@ function Card({img = undefined, dimensions = {width: 63, height: 88, units: "mm"
         top: number,
         left: number,
         transform?: string,
-        'box-shadow'?: string,
+        boxShadow?: string,
         width?: string,
         height?: string
     }
@@ -68,7 +68,7 @@ function Card({img = undefined, dimensions = {width: 63, height: 88, units: "mm"
         lastPosX = e.clientX - offsetX;
         lastPosY = e.clientY - offsetY;
 
-        setCardStyle({...cardStyle, 'box-shadow': `0em 0em 1em black`});
+        setCardStyle({...cardStyle, boxShadow: `0em 0em 1em black`});
 
         // Create an event handler to call dragCard when the mouse moves
         document.onmousemove = (move: MouseEvent) => {dragCard(move)};
@@ -95,17 +95,19 @@ function Card({img = undefined, dimensions = {width: 63, height: 88, units: "mm"
             top: e.clientY - offsetY, 
             left: e.clientX - offsetX, 
             transform: `rotate3d(${speedY}, ${-speedX}, 0, ${tilt}deg)`,
-            'box-shadow': `${-speedX / tiltShadow}rem ${-speedY / tiltShadow}rem 1em black`
+            boxShadow: `${-speedX / tiltShadow}rem ${-speedY / tiltShadow}rem 1em black`
         });
     }
 
     // Release the card
     const releaseCard = (e: MouseEvent) => {
+        e.preventDefault();
+
         document.onmousemove = null;
         document.onmouseup = null;
 
         // Remove any leftover tilt and box-shadow
-        setCardStyle({...cardStyle, top: e.clientY - offsetY, left: e.clientX - offsetX, transform: undefined, 'box-shadow': undefined});
+        setCardStyle({...cardStyle, top: e.clientY - offsetY, left: e.clientX - offsetX, transform: undefined, boxShadow: undefined});
     }
 
     return(
