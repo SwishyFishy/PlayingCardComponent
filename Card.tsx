@@ -18,7 +18,7 @@ interface props_Card {
 
 function Card({img = undefined, dimensions = {width: 63, height: 88, units: "mm"}, position = {x: 0, y: 0}, children = undefined}: PropsWithChildren<props_Card>)
 {
-    // Object which holds all the data for the style attribute of this element
+    // Data for the style attribute of this element for positioning, movement tilt, and size
     type CardStyle = {
         top: number,
         left: number,
@@ -29,19 +29,19 @@ function Card({img = undefined, dimensions = {width: 63, height: 88, units: "mm"
     const [cardStyle, setCardStyle] = useState<CardStyle>({top: position.y, left: position.x});
 
     // Variables for tracking which part of the card the user grabbed
-    let offsetX: number = 0;
-    let offsetY: number = 0;
+    let offsetX: number = 0;            // Distance between card left property and the position of the cursor when card is grabbed
+    let offsetY: number = 0;            // Distance between card top property and the position of the cursor when card is grabbed
 
     // Variables for tracking card movement speed
-    let lastPosX: number = 0;
-    let lastPosY: number = 0;
-    let speedX: number = 0;
-    let speedY: number = 0;
+    let lastPosX: number = 0;           // Card left property value in previous tick whilst dragging card
+    let lastPosY: number = 0;           // Card top property value in previous tick whilst dragging card
+    let speedX: number = 0;             // Number of pixels traversed by card in X direction during this tick
+    let speedY: number = 0;             // Number of pixels traversed by card in Y direction during this tick
 
     // Variable for tracking card angle in 3d space
-    let tilt: number = 0;
-    const tiltAmplifier: number = 2;
-    const tiltMax: number = 45;
+    let tilt: number = 0;               // Angle of card in 3d space
+    const tiltAmplifier: number = 2;    // Constant multiplied into tilt to exaggerate the angle
+    const tiltMax: number = 45;         // Constant maximum allowable value of tilt * tiltAmplifier
 
     // Add user-defined styles to cardStyle
     useEffect(() => {
@@ -95,6 +95,7 @@ function Card({img = undefined, dimensions = {width: 63, height: 88, units: "mm"
         document.onmousemove = null;
         document.onmouseup = null;
 
+        // Remove any leftover tilt
         setCardStyle({...cardStyle, top: e.clientY - offsetY, left: e.clientX - offsetX, transform: undefined});
     }
 
