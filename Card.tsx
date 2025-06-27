@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { type PropsWithChildren } from 'react';
 
 import './styles/Card.css';
@@ -22,12 +22,17 @@ function Card({img = undefined, dimensions = {width: 63, height: 88, units: "mm"
     type CardStyle = {
         top: number,
         left: number,
+        width: string,
+        height: string,
         transform?: string,
-        boxShadow?: string,
-        width?: string,
-        height?: string
+        boxShadow?: string
     }
-    const [cardStyle, setCardStyle] = useState<CardStyle>({top: position.y, left: position.x});
+    const [cardStyle, setCardStyle] = useState<CardStyle>({
+        top: position.y, 
+        left: position.x, 
+        width: dimensions.width.toString() + dimensions.units,
+        height: dimensions.height.toString() + dimensions.units
+    });
 
     // Variables for tracking which part of the card the user grabbed
     let offsetX: number = 0;            // Distance between card left property and the position of the cursor when card is grabbed
@@ -44,17 +49,6 @@ function Card({img = undefined, dimensions = {width: 63, height: 88, units: "mm"
     const tiltAmplifier: number = 2;    // Constant multiplied into tilt to exaggerate the angle
     const tiltShadow: number = 20;      // Constant reciprocal multiplied into speed to adjust box-shadow to follow card
     const tiltMax: number = 45;         // Constant maximum allowable value of tilt * tiltAmplifier
-
-    // Add user-defined styles to cardStyle
-    useEffect(() => {
-        if (dimensions)
-        {
-            setCardStyle({...cardStyle, 
-                width: dimensions.width.toString() + dimensions.units,
-                height: dimensions.height.toString() + dimensions.units
-            })
-        }
-    }, [])
 
     // Grab the card with the cursor
     const grabCard = (e: React.MouseEvent) => {
