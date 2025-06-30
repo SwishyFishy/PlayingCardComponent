@@ -2,10 +2,11 @@
   "compilerOptions": {
     "target": "es6",
     "jsx": "react-jsx",
-    "module": "es6",
+    "module": "nodenext",
     "declaration": true,
     "outDir": "dist",
     "esModuleInterop": true,
+    "moduleResolution": "nodenext",
     "forceConsistentCasingInFileNames": true,
     "allowSyntheticDefaultImports": true,
     "strict": true,
