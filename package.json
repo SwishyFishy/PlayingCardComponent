@@ -14,7 +14,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsc"
+    "build": "rm -rf dist && tsc && cp -r dev/styles dist" 
   },
   "peerDependencies": {
     "react": "^19.1.0",

@@ -11,9 +11,5 @@
     "allowSyntheticDefaultImports": true,
     "strict": true,
     "skipLibCheck": true
-  },
-  "include": [
-    "styles/*.css",
-    "Card.tsx"
-  ]
+  }
 }
