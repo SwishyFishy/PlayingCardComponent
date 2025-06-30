@@ -1,0 +1,27 @@
+{
+  "name": "animated-playing-card",
+  "version": "1.0.0",
+  "description": "A user-interactable playing card component which animates to reflect its own movement.",
+  "license": "ISC",
+  "author": "SwishyFishy",
+  "main": "dist/Card.js",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/Card.d.ts",
+      "default": "./dist/Card.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc --jsx react-jsx"
+  },
+  "peerDependencies": {
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.3"
+  }
+}
