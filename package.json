@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "description": "A user-interactable playing card component which animates to reflect its own movement.",
   "license": "ISC",
-  "author": "SwishyFishy",
+  "author": {
+    "name": "Jonah Galloway-Fenwick",
+    "url": "https://jonahgallowayfenwick.ca"
+  },
   "main": "dist/Card.js",
   "types": "dist/Card.d.ts",
   "files": [
