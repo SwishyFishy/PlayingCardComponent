@@ -5,17 +5,12 @@
   "license": "ISC",
   "author": "SwishyFishy",
   "main": "dist/Card.js",
+  "types": "dist/Card.d.ts",
   "files": [
     "dist"
   ],
-  "exports": {
-    ".": {
-      "types": "./dist/Card.d.ts",
-      "default": "./dist/Card.js"
-    }
-  },
   "scripts": {
-    "build": "tsc --jsx react-jsx"
+    "build": "tsc"
   },
   "peerDependencies": {
     "react": "^19.1.0",
