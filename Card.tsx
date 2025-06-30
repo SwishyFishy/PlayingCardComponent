@@ -16,7 +16,7 @@ interface props_Card {
     }
 }
 
-function Card({img = undefined, dimensions = {width: 63, height: 88, units: "mm"}, position = {x: 0, y: 0}, children = undefined}: PropsWithChildren<props_Card>)
+export function Card({img = undefined, dimensions = {width: 63, height: 88, units: "mm"}, position = {x: 0, y: 0}, children = undefined}: PropsWithChildren<props_Card>)
 {
     // Data for the style attribute of this element for positioning, movement tilt, and size
     type CardStyle = {
@@ -111,5 +111,3 @@ function Card({img = undefined, dimensions = {width: 63, height: 88, units: "mm"
         </div>
     );
 }
-
-export default Card;
