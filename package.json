@@ -8,6 +8,12 @@
     "name": "Jonah Galloway-Fenwick",
     "url": "https://jonahgallowayfenwick.ca"
   },
+  "keywords": [
+    "react",
+    "playing card",
+    "card",
+    "draggable"
+  ],
   "main": "dist/Card.js",
   "types": "dist/Card.d.ts",
   "files": [
