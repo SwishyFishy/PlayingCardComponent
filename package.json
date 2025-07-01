@@ -8,6 +8,10 @@
     "name": "Jonah Galloway-Fenwick",
     "url": "https://jonahgallowayfenwick.ca"
   },
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/SwishyFishy/PlayingCardComponent.git"
+  },
   "keywords": [
     "react",
     "playing card",
