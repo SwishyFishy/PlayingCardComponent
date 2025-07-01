@@ -1,6 +1,6 @@
 {
   "name": "animated-playing-card",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "type": "module",
   "description": "A user-interactable playing card component which animates to reflect its own movement.",
   "license": "ISC",
@@ -9,8 +9,8 @@
     "url": "https://jonahgallowayfenwick.ca"
   },
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/SwishyFishy/PlayingCardComponent.git"
+    "type": "git",
+    "url": "https://github.com/SwishyFishy/PlayingCardComponent.git"
   },
   "keywords": [
     "react",
