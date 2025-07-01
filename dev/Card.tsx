@@ -106,8 +106,7 @@ export function Card({img = undefined, dimensions = {width: 63, height: 88, unit
 
     return(
         <div className="card" onMouseDown={(click: any) => {click.button == 0 ? grabCard(click) : () => {/*Placeholder*/}}} style={{...cardStyle}}>
-            {img ? <img src={img} className="card_img"/> : ""}
-            {children ? children : ""}
+            {img ? <img src={img} className="card_img"/> : children}
         </div>
     );
 }
