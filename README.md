@@ -15,7 +15,7 @@ import { Card } from "animated-playing-card";
 <Card><div className="card_content">...</div><Card/>    // A card with HTML content
 
 ```
-Elements inside a card do not need to be contained within a ```<div>```. It is recommended, however, for the ease of styling via CSS.
+Elements inside a card do not need to be contained within a ```<div>```. It is recommended, however, for ease of styling via CSS.
 
 ### Card Attributes
 
