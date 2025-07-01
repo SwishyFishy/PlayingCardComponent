@@ -8,6 +8,12 @@ This package is a React component.
 
 ### Basic Usage
 
+**Install** 
+
+```npm -i animated-playing-card```
+
+**Use**
+
 ```Javascript
 import { Card } from "animated-playing-card";
 
