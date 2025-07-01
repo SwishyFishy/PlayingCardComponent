@@ -5,6 +5,7 @@ import './styles/Card.css';
 
 interface props_Card {
     img?: string,
+    color?: string,
     dimensions?: {
         width: number,
         height: number,
@@ -16,7 +17,7 @@ interface props_Card {
     }
 }
 
-export function Card({img = undefined, dimensions = {width: 63, height: 88, units: "mm"}, position = {x: 0, y: 0}, children = undefined}: PropsWithChildren<props_Card>)
+export function Card({img = undefined, color = "black", dimensions = {width: 63, height: 88, units: "mm"}, position = {x: 0, y: 0}, children = undefined}: PropsWithChildren<props_Card>)
 {
     // Data for the style attribute of this element for positioning, movement tilt, and size
     type CardStyle = {
@@ -24,6 +25,7 @@ export function Card({img = undefined, dimensions = {width: 63, height: 88, unit
         left: number,
         width: string,
         height: string,
+        backgroundColor: string,
         transform?: string,
         boxShadow?: string
     }
@@ -31,7 +33,8 @@ export function Card({img = undefined, dimensions = {width: 63, height: 88, unit
         top: position.y, 
         left: position.x, 
         width: dimensions.width.toString() + dimensions.units,
-        height: dimensions.height.toString() + dimensions.units
+        height: dimensions.height.toString() + dimensions.units,
+        backgroundColor: color
     });
 
     // Variables for tracking which part of the card the user grabbed

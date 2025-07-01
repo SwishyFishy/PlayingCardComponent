@@ -1,8 +1,6 @@
 .card{
     position: absolute;
 
-    background-color: aqua;
-
     border: .5em solid black;
     border-radius: .5em;
 }

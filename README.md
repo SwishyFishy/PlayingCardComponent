@@ -22,6 +22,8 @@ Elements inside a card do not need to be contained within a ```<div>```. It is r
 
 * ```img="image_name"```
     > Fills the card with the image. If not provided, the card is populated with any provided children.
+* ```color="any valid representation of colour in CSS"```
+    > The background colour of the card. If not provided, the background of the card is coloured `black`. Recommended if the card displays HTML content, as the transformations applied to the card while moving may reveal slivers of the background.
 * ```dimensions={{width: int, height: int, units: "mm" | "px" | "rem" | "%"}}```
     > Sets the dimensions of the card using the CSS unit provided. If not provided, the dimensions are set to those of a standard physical playing card; 63x88mm. 
 * ```position={{x: int, y: int}}```
