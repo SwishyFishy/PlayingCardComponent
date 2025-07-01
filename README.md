@@ -17,7 +17,7 @@ This package is a React component.
 ```Javascript
 import { Card } from "animated-playing-card";
 
-<Card />                                                // A blank card, or one with an image
+<Card/>                                                 // A blank card, or one with an image
 <Card><div className="card_content">...</div><Card/>    // A card with HTML content
 
 ```
