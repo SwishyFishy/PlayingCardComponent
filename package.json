@@ -1,6 +1,6 @@
 {
   "name": "animated-playing-card",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "type": "module",
   "description": "A user-interactable playing card component which animates to reflect its own movement.",
   "license": "ISC",
@@ -20,7 +20,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "rm -rf dist && tsc && cp -r dev/styles dist" 
+    "build": "rm -rf dist && tsc && cp -r dev/styles dist"
   },
   "peerDependencies": {
     "react": "^19.1.0",
