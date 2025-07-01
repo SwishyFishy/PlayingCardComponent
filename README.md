@@ -10,7 +10,7 @@ This package is a React component.
 
 **Install** 
 
-```npm -i animated-playing-card```
+```npm i animated-playing-card```
 
 **Use**
 
