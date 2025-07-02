@@ -4,8 +4,8 @@ import { type PropsWithChildren } from 'react';
 import './assets/styles/Card.css';
 
 interface props_Card {
-    img?: string,
-    back?: string,
+    frontImg?: string,
+    backImg?: string,
     color?: string,
     dimensions?: {
         width: number,
@@ -19,8 +19,8 @@ interface props_Card {
 }
 
 export function Card({
-        img = undefined, 
-        back = "./assets/img/default_card_back.jpg",
+        frontImg = undefined, 
+        backImg = undefined,
         color = "black", 
         dimensions = {width: 63, height: 88, units: "mm"},
         position = {x: 0, y: 0}, 
@@ -127,12 +127,12 @@ export function Card({
     }
 
     return(
-        <div className="card" onContextMenu={(click: any) => {click.preventDefault()}} onMouseDown={(click: any) => {click.button == 0 ? grabCard(click) : flipCard(click)}} style={{...cardStyle}}>
+        <div className="card" onContextMenu={(click: any) => {flipCard(click)}} onMouseDown={(click: any) => {click.button == 0 ? grabCard(click) : () => {/*Placeholder*/}}} style={{...cardStyle}}>
             <div className="card-front">
-                {img ? <img src={img} className="card_img"/> : children}
+                {frontImg ? <img src={frontImg} className="card_img"/> : children}
             </div>
-            <div className="card-back">
-                <img src={back} className="card_img"/>
+            <div className="card-back" /*RotateY this face by 180deg (separate CardStyle into 2, one for front one for back) to make sure it always faces the opposite direction of the front*/>
+                <img src={backImg ? backImg : "./assets/img/default_card_back.jpg"} className="card_img"/>
             </div>
         </div>
     );
