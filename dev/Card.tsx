@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import { type PropsWithChildren } from 'react';
 
-import './styles/Card.css';
+import './assets/styles/Card.css';
 
 interface props_Card {
     img?: string,
+    back?: string,
     color?: string,
     dimensions?: {
         width: number,
@@ -17,7 +18,14 @@ interface props_Card {
     }
 }
 
-export function Card({img = undefined, color = "black", dimensions = {width: 63, height: 88, units: "mm"}, position = {x: 0, y: 0}, children = undefined}: PropsWithChildren<props_Card>)
+export function Card({
+        img = undefined, 
+        back = "./assets/img/default_card_back.jpg",
+        color = "black", 
+        dimensions = {width: 63, height: 88, units: "mm"},
+        position = {x: 0, y: 0}, 
+        children = undefined
+    }: PropsWithChildren<props_Card>)
 {
     // Data for the style attribute of this element for positioning, movement tilt, and size
     type CardStyle = {
@@ -26,6 +34,7 @@ export function Card({img = undefined, color = "black", dimensions = {width: 63,
         width: string,
         height: string,
         backgroundColor: string,
+        transition?: string,
         transform?: string,
         boxShadow?: string
     }
@@ -48,6 +57,7 @@ export function Card({img = undefined, color = "black", dimensions = {width: 63,
     let speedY: number = 0;             // Number of pixels traversed by card in Y direction during this tick
 
     // Variable for tracking card angle in 3d space
+    const [isFlipped, setIsFlipped] = useState<boolean>(false);
     let tilt: number = 0;               // Angle of card in 3d space
     const tiltAmplifier: number = 2;    // Constant multiplied into tilt to exaggerate the angle
     const tiltShadow: number = 20;      // Constant reciprocal multiplied into speed to adjust box-shadow to follow card
@@ -90,8 +100,9 @@ export function Card({img = undefined, color = "black", dimensions = {width: 63,
         // Move the card to the mouse
         setCardStyle({...cardStyle, 
             top: e.clientY - offsetY, 
-            left: e.clientX - offsetX, 
-            transform: `rotate3d(${speedY}, ${-speedX}, 0, ${tilt}deg)`,
+            left: e.clientX - offsetX,
+            transition: undefined,
+            transform: `rotateY(${isFlipped? 180 : 0}deg) rotate3d(${speedY}, ${-speedX}, 0, ${tilt}deg)`,
             boxShadow: `${-speedX / tiltShadow}rem ${-speedY / tiltShadow}rem 1em black`
         });
     }
@@ -104,12 +115,25 @@ export function Card({img = undefined, color = "black", dimensions = {width: 63,
         document.onmouseup = null;
 
         // Remove any leftover tilt and box-shadow
-        setCardStyle({...cardStyle, top: e.clientY - offsetY, left: e.clientX - offsetX, transform: undefined, boxShadow: undefined});
+        setCardStyle({...cardStyle, top: e.clientY - offsetY, left: e.clientX - offsetX, transform: `rotateY(${isFlipped ? 180 : 0}deg)`, boxShadow: undefined});
+    }
+
+    // Flip the card
+    const flipCard = (e: React.MouseEvent) => {
+        e.preventDefault();
+
+        setIsFlipped(!isFlipped);
+        setCardStyle({...cardStyle, transition: `transform 0.5s`, transform: `rotateY(${isFlipped ? 180 : 0}deg)`});
     }
 
     return(
-        <div className="card" onMouseDown={(click: any) => {click.button == 0 ? grabCard(click) : () => {/*Placeholder*/}}} style={{...cardStyle}}>
-            {img ? <img src={img} className="card_img"/> : children}
+        <div className="card" onContextMenu={(click: any) => {click.preventDefault()}} onMouseDown={(click: any) => {click.button == 0 ? grabCard(click) : flipCard(click)}} style={{...cardStyle}}>
+            <div className="card-front">
+                {img ? <img src={img} className="card_img"/> : children}
+            </div>
+            <div className="card-back">
+                <img src={back} className="card_img"/>
+            </div>
         </div>
     );
 }

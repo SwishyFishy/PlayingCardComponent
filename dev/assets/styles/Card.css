@@ -3,6 +3,13 @@
 
     border: .5em solid black;
     border-radius: .5em;
+
+}
+
+.card-front, .card-back{
+    position: absolute;
+
+    backface-visibility: hidden;
 }
 
 .card .card_img{
