@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { type PropsWithChildren } from 'react';
 
+import { type CardStyle, type CardAnimation } from './assets/types.js';
+
 import './assets/styles/Card.css';
 
 interface props_Card {
@@ -27,17 +29,7 @@ export function Card({
         children = undefined
     }: PropsWithChildren<props_Card>)
 {
-    // Data for the style attribute of this element for positioning, movement tilt, and size
-    type CardStyle = {
-        top: number,
-        left: number,
-        width: string,
-        height: string,
-        backgroundColor: string,
-        transition?: string,
-        transform?: string,
-        boxShadow?: string
-    }
+    // Card style and animation
     const [cardStyle, setCardStyle] = useState<CardStyle>({
         top: position.y, 
         left: position.x, 
@@ -45,6 +37,8 @@ export function Card({
         height: dimensions.height.toString() + dimensions.units,
         backgroundColor: color
     });
+    const [cardFrontAnimation, setCardFrontAnimation] = useState<CardAnimation>({});
+    const [cardBackAnimation, setCardBackAnimation] = useState<CardAnimation>({});
 
     // Variables for tracking which part of the card the user grabbed
     let offsetX: number = 0;            // Distance between card left property and the position of the cursor when card is grabbed
@@ -75,7 +69,8 @@ export function Card({
         lastPosX = e.clientX - offsetX;
         lastPosY = e.clientY - offsetY;
 
-        setCardStyle({...cardStyle, boxShadow: `0em 0em 1em black`});
+        setCardFrontAnimation({...cardFrontAnimation, boxShadow: `0em 0em 1em black`});
+        setCardBackAnimation({...cardBackAnimation, boxShadow: `0em 0em 1em black`});
 
         // Create an event handler to call dragCard when the mouse moves
         document.onmousemove = (move: MouseEvent) => {dragCard(move)};
@@ -100,9 +95,16 @@ export function Card({
         // Move the card to the mouse
         setCardStyle({...cardStyle, 
             top: e.clientY - offsetY, 
-            left: e.clientX - offsetX,
+            left: e.clientX - offsetX
+        });
+        setCardFrontAnimation({
             transition: undefined,
-            transform: `rotateY(${isFlipped? 180 : 0}deg) rotate3d(${speedY}, ${-speedX}, 0, ${tilt}deg)`,
+            transform: `rotateY(${isFlipped ? 180 : 0}deg) rotate3d(${speedY}, ${-speedX}, 0, ${tilt}deg)`,
+            boxShadow: `${-speedX / tiltShadow}rem ${-speedY / tiltShadow}rem 1em black`
+        });
+        setCardBackAnimation({
+            transition: undefined,
+            transform: `rotateY(${isFlipped ? 0 : 180}deg) rotate3d(${speedY}, ${-speedX}, 0, ${tilt}deg)`,
             boxShadow: `${-speedX / tiltShadow}rem ${-speedY / tiltShadow}rem 1em black`
         });
     }
@@ -115,7 +117,9 @@ export function Card({
         document.onmouseup = null;
 
         // Remove any leftover tilt and box-shadow
-        setCardStyle({...cardStyle, top: e.clientY - offsetY, left: e.clientX - offsetX, transform: `rotateY(${isFlipped ? 180 : 0}deg)`, boxShadow: undefined});
+        setCardStyle({...cardStyle, top: e.clientY - offsetY, left: e.clientX - offsetX});
+        setCardFrontAnimation({transform: `rotateY(${isFlipped ? 180 : 0}deg)`, boxShadow: undefined});
+        setCardBackAnimation({transform: `rotateY(${isFlipped ? 0 : 180}deg)`, boxShadow: undefined});
     }
 
     // Flip the card
@@ -123,15 +127,16 @@ export function Card({
         e.preventDefault();
 
         setIsFlipped(!isFlipped);
-        setCardStyle({...cardStyle, transition: `transform 0.5s`, transform: `rotateY(${isFlipped ? 180 : 0}deg)`});
+        setCardFrontAnimation({...cardFrontAnimation, transition: `transform 0.5s`, transform: `rotateY(${isFlipped ? 180 : 0}deg)`});
+        setCardBackAnimation({...cardBackAnimation, transition: `transform 0.5s`, transform: `rotateY(${isFlipped ? 0 : 180}deg)`});
     }
 
     return(
-        <div className="card" onContextMenu={(click: any) => {flipCard(click)}} onMouseDown={(click: any) => {click.button == 0 ? grabCard(click) : () => {/*Placeholder*/}}} style={{...cardStyle}}>
-            <div className="card-front">
+        <div className="card" onContextMenu={(click: any) => {flipCard(click)}} onMouseDown={(click: any) => {click.button == 0 ? grabCard(click) : () => {/*Placeholder*/}}} style={{...cardStyle, ...cardFrontAnimation}}>
+            <div className="card-front" /*style={{...cardFrontAnimation}}*/>
                 {frontImg ? <img src={frontImg} className="card_img"/> : children}
             </div>
-            <div className="card-back" /*RotateY this face by 180deg (separate CardStyle into 2, one for front one for back) to make sure it always faces the opposite direction of the front*/>
+            <div className="card-back" /*style={{...cardBackAnimation}}*/>
                 <img src={backImg ? backImg : "./assets/img/default_card_back.jpg"} className="card_img"/>
             </div>
         </div>
