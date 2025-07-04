@@ -128,10 +128,10 @@ export function Card({
 
     return(
         <div className="card" onContextMenu={(click: any) => {flipCard(click)}} onMouseDown={(click: any) => {grabCard(click)}} style={{...cardPosition, ...cardSize, ...cardAnimation}}>
-            <div className={`card-front ` + (isFlipped ? "" : "card-back-face")} style={{...cardStyle}}>
-                {frontImg ? <img src={frontImg} className="card_img" alt="Front Face"/> : "Front Face"}
+            <div className={`card-front ` + (isFlipped ? "card-back-face" : "")} style={{...cardStyle}}>
+                {frontImg ? <img src={frontImg} className="card_img" alt="Front Face"/> : children}
             </div>
-            <div className={`card-back ` + (isFlipped ? "card-back-face" : "")} style={{...cardStyle}}>
+            <div className={`card-back ` + (isFlipped ? "" : "card-back-face")} style={{...cardStyle}}>
                 <img src={backImg ? backImg : "./assets/img/default_card_back.jpg"} className="card_img" alt="Back Face"/>
             </div>
         </div>
