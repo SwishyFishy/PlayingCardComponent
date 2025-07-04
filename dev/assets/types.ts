@@ -1,13 +1,17 @@
-export type CardStyle = {
+export type CardPosition = {
     top: number,
     left: number,
+}
+
+export type CardSize = {
     width: string,
-    height: string,
-    backgroundColor: string
+    height: string
 }
 
 export type CardAnimation = {
-    transition?: string,
     transform?: string,
     boxShadow?: string
+}
+export type CardStyle = {
+    backgroundColor: string
 }
