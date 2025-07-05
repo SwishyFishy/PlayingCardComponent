@@ -72,7 +72,7 @@ export function Card({
         lastPosX = e.clientX - offsetX;
         lastPosY = e.clientY - offsetY;
 
-        setCardAnimation({...cardAnimation, boxShadow: `0rem 0rem 1rem black`});
+        setCardAnimation({...cardAnimation, boxShadow: `.5rem .5rem 2rem black`});
 
         // Create an event handler to call dragCard when the mouse moves
         document.onmousemove = (move: MouseEvent) => {dragCard(move)};
@@ -101,7 +101,7 @@ export function Card({
         });
         setCardAnimation({...cardAnimation,
             transform: `rotate3d(${speedY}, ${-speedX}, 0, ${tilt}deg)`,
-            boxShadow: `${-speedX / tiltShadow}rem ${-speedY / tiltShadow}rem 1rem black`
+            boxShadow: `${.5 + -speedX / tiltShadow}rem ${.5 + -speedY / tiltShadow}rem 1rem black`
         });
     }
 
@@ -126,10 +126,10 @@ export function Card({
 
     return(
         <div className="card" onContextMenu={(click: any) => {flipCard(click)}} onMouseDown={(click: any) => {grabCard(click)}} style={{...cardPosition, ...cardSize, ...cardAnimation}}>
-            <div className={`card-front ` + (isFlipped ? "card-back-face" : "")} style={{...cardStyle}}>
+            <div className={`card-front ` + (isFlipped ? "card-back-face" : "")} style={cardStyle}>
                 {frontImg ? <img src={frontImg} className="card_img" alt="Front Face"/> : children}
             </div>
-            <div className={`card-back ` + (isFlipped ? "" : "card-back-face")} style={{...cardStyle}}>
+            <div className={`card-back ` + (isFlipped ? "" : "card-back-face")} style={cardStyle}>
                 <img src={backImg ? backImg : "./assets/img/default_card_back.jpg"} className="card_img" alt="Back Face"/>
             </div>
         </div>
