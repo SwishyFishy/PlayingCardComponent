@@ -64,8 +64,6 @@ export function Card({
     const grabCard = (e: React.MouseEvent) => {
         e.preventDefault();
 
-        console.log(isFlipped);
-
         // Track the part of the card clicked
         offsetX = e.clientX - cardPosition.left;
         offsetY = e.clientY - cardPosition.top;
@@ -74,7 +72,7 @@ export function Card({
         lastPosX = e.clientX - offsetX;
         lastPosY = e.clientY - offsetY;
 
-        setCardAnimation({...cardAnimation, boxShadow: `0em 0em 1em black`});
+        setCardAnimation({...cardAnimation, boxShadow: `0rem 0rem 1rem black`});
 
         // Create an event handler to call dragCard when the mouse moves
         document.onmousemove = (move: MouseEvent) => {dragCard(move)};
@@ -103,7 +101,7 @@ export function Card({
         });
         setCardAnimation({...cardAnimation,
             transform: `rotate3d(${speedY}, ${-speedX}, 0, ${tilt}deg)`,
-            boxShadow: `${-speedX / tiltShadow}rem ${-speedY / tiltShadow}rem 1em black`
+            boxShadow: `${-speedX / tiltShadow}rem ${-speedY / tiltShadow}rem 1rem black`
         });
     }
 
