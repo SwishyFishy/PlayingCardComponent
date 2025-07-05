@@ -24,7 +24,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "rm -rf dist && tsc && cp -r dev/assets dist"
+    "build": "rm -rf dist && tsc && cp -r dev/assets dist && cp global.d.ts dist"
   },
   "peerDependencies": {
     "react": "^19.1.0",

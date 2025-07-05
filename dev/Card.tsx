@@ -1,10 +1,29 @@
 import { useState } from 'react';
 import { type PropsWithChildren } from 'react';
 
-import { CardPosition, CardSize, CardAnimation, CardStyle } from './assets/types.js';
+import cardBack from './assets/img/default_card_back.jpg';
 
 import './assets/styles/Card.css';
 
+// Type Declarations //
+///////////////////////
+type CardPosition = {
+    top: number,
+    left: number,
+}
+type CardSize = {
+    width: string,
+    height: string
+}
+type CardAnimation = {
+    transform?: string,
+    boxShadow?: string
+}
+type CardStyle = {
+    backgroundColor: string
+}
+
+// Props Type
 interface props_Card {
     frontImg?: string,
     backImg?: string,
@@ -20,6 +39,8 @@ interface props_Card {
     }
 }
 
+// Card //
+//////////
 export function Card({
         frontImg = undefined, 
         backImg = undefined,
@@ -130,7 +151,7 @@ export function Card({
                 {frontImg ? <img src={frontImg} className="card_img" alt="Front Face"/> : children}
             </div>
             <div className={`card-back ` + (isFlipped ? "" : "card-back-face")} style={cardStyle}>
-                <img src={backImg ? backImg : "./assets/img/default_card_back.jpg"} className="card_img" alt="Back Face"/>
+                <img src={backImg ? backImg : cardBack} className="card_img" alt="Back Face"/>
             </div>
         </div>
     );
