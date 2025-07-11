@@ -24,8 +24,9 @@ type CardAnimation = {
 type CardStyle = {
     backgroundColor: string
 }
-type ContextMenu = {
-    position: CardPosition,
+type ContextMenuDisplay = {
+    top: number,
+    left: number,
     show: boolean
 }
 
@@ -69,8 +70,9 @@ export function Card({
     const [cardStyle, setCardStyle] = useState<CardStyle>({
         backgroundColor: color
     })
-    const [contextMenu, setContextMenu] = useState<ContextMenu>({
-        position: {top: position.y, left: position.x},
+    const [contextMenuDisplay, setContextMenuDisplay] = useState<ContextMenuDisplay>({
+        top: position.y, 
+        left: position.x,
         show: false
     })
 
@@ -159,7 +161,7 @@ export function Card({
     const showCardContext = (e: React.MouseEvent) => {
         e.preventDefault();
 
-        setContextMenu({...contextMenu, position: {top: e.clientY, left: e.clientX}, show: true});
+        setContextMenuDisplay({...contextMenuDisplay, top: e.clientY, left: e.clientX, show: true});
     }
 
     return(
@@ -177,7 +179,7 @@ export function Card({
                     <img src={backImg ? backImg : cardBack} className="card_img" alt="Back Face"/>
                 </div>
             </div>
-            <ContextMenu show={contextMenu.show} position={contextMenu.position}/>
+            <ContextMenu show={contextMenuDisplay.show} position={{top: contextMenuDisplay.top, left: contextMenuDisplay.left}}/>
         </>
     );
 }

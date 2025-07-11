@@ -13,11 +13,13 @@ interface props_ContextMenu {
     show: boolean
 }
 
+// Context Menu //
+//////////////////
 export function ContextMenu({position, show}: props_ContextMenu)
 {
     return (
         <div 
-            className={show ? "card_context_menu" : "card_context_menu hidden"}
+            className={"card_context_menu" + (show ? "" : " hidden")}
             style={position}
         >
             <p>Hello World!</p>
