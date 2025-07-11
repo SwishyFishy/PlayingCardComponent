@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { type PropsWithChildren } from 'react';
 
+import { ContextMenu } from './components/ContextMenu.js';
+
 import cardBack from './assets/img/default_card_back.jpg';
 
 import './assets/styles/Card.css';
@@ -21,6 +23,10 @@ type CardAnimation = {
 }
 type CardStyle = {
     backgroundColor: string
+}
+type ContextMenu = {
+    position: CardPosition,
+    show: boolean
 }
 
 // Props Type
@@ -62,6 +68,10 @@ export function Card({
     const [cardAnimation, setCardAnimation] = useState<CardAnimation>({});
     const [cardStyle, setCardStyle] = useState<CardStyle>({
         backgroundColor: color
+    })
+    const [contextMenu, setContextMenu] = useState<ContextMenu>({
+        position: {top: position.y, left: position.x},
+        show: false
     })
 
     // Variables for tracking which part of the card the user grabbed
@@ -145,14 +155,29 @@ export function Card({
         setIsFlipped(!isFlipped);
     }
 
+    // Show the card context menu
+    const showCardContext = (e: React.MouseEvent) => {
+        e.preventDefault();
+
+        setContextMenu({...contextMenu, position: {top: e.clientY, left: e.clientX}, show: true});
+    }
+
     return(
-        <div className="card" onContextMenu={(click: any) => {flipCard(click)}} onMouseDown={(click: any) => {grabCard(click)}} style={{...cardPosition, ...cardSize, ...cardAnimation}}>
-            <div className={`card-front ` + (isFlipped ? "card-back-face" : "")} style={cardStyle}>
-                {frontImg ? <img src={frontImg} className="card_img" alt="Front Face"/> : children}
+        <>
+            <div className="card" 
+                onContextMenu={(click: any) => {showCardContext(click)}}
+                onDoubleClick={(click: any) => {flipCard(click)}} 
+                onMouseDown={(click: any) => {click.button == 0 && grabCard(click)}}
+                style={{...cardPosition, ...cardSize, ...cardAnimation}}
+            >
+                <div className={`card-front ` + (isFlipped ? "card-back-face" : "")} style={cardStyle}>
+                    {frontImg ? <img src={frontImg} className="card_img" alt="Front Face"/> : children}
+                </div>
+                <div className={`card-back ` + (isFlipped ? "" : "card-back-face")} style={cardStyle}>
+                    <img src={backImg ? backImg : cardBack} className="card_img" alt="Back Face"/>
+                </div>
             </div>
-            <div className={`card-back ` + (isFlipped ? "" : "card-back-face")} style={cardStyle}>
-                <img src={backImg ? backImg : cardBack} className="card_img" alt="Back Face"/>
-            </div>
-        </div>
+            <ContextMenu show={contextMenu.show} position={contextMenu.position}/>
+        </>
     );
 }

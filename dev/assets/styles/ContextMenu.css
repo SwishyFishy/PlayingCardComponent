@@ -1,0 +1,8 @@
+.card_context_menu
+{
+    position: absolute;
+}
+
+.card_context_menu.hidden{
+    display: none;
+}
