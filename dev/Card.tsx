@@ -83,7 +83,7 @@ export function Card({
     let speedX: number = 0;             // Number of pixels traversed by card in X direction during this tick
     let speedY: number = 0;             // Number of pixels traversed by card in Y direction during this tick
 
-    // Variable for tracking card angle in 3d space
+    // Variables for tracking card angle in 3d space
     const [isFlipped, setIsFlipped] = useState<boolean>(false);
     let tilt: number = 0;               // Angle of card in 3d space
     const tiltAmplifier: number = 2;    // Constant multiplied into tilt to exaggerate the angle
