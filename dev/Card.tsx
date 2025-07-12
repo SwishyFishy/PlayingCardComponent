@@ -21,9 +21,6 @@ type CardAnimation = {
     transform?: string,
     boxShadow?: string
 }
-type CardStyle = {
-    backgroundColor: string
-}
 type ContextMenuDisplay = {
     top: number,
     left: number,
@@ -34,7 +31,6 @@ type ContextMenuDisplay = {
 interface props_Card {
     frontImg?: string,
     backImg?: string,
-    color?: string,
     dimensions?: {
         width: number,
         height: number,
@@ -51,7 +47,6 @@ interface props_Card {
 export function Card({
         frontImg = undefined, 
         backImg = undefined,
-        color = "black", 
         dimensions = {width: 63, height: 88, units: "mm"},
         position = {x: 0, y: 0}, 
         children = undefined
@@ -67,9 +62,6 @@ export function Card({
         height: dimensions.height.toString() + dimensions.units,
     });
     const [cardAnimation, setCardAnimation] = useState<CardAnimation>({});
-    const [cardStyle, setCardStyle] = useState<CardStyle>({
-        backgroundColor: color
-    })
     const [contextMenuDisplay, setContextMenuDisplay] = useState<ContextMenuDisplay>({
         top: position.y, 
         left: position.x,
@@ -178,10 +170,10 @@ export function Card({
                 onMouseDown={(click: any) => {click.button == 0 && grabCard(click)}}
                 style={{...cardPosition, ...cardSize, ...cardAnimation}}
             >
-                <div className={`card-front ` + (isFlipped ? "card-back-face" : "")} style={cardStyle}>
+                <div className={`card-front ` + (isFlipped ? "card-back-face" : "")}>
                     {frontImg ? <img src={frontImg} className="card_img" alt="Front Face"/> : children}
                 </div>
-                <div className={`card-back ` + (isFlipped ? "" : "card-back-face")} style={cardStyle}>
+                <div className={`card-back ` + (isFlipped ? "" : "card-back-face")}>
                     <img src={backImg ? backImg : cardBack} className="card_img" alt="Back Face"/>
                 </div>
             </div>

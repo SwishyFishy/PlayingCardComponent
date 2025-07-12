@@ -30,9 +30,8 @@ Elements inside a card do not need to be contained within a ```<div>```. It is r
     > Fills the front face of the card with the image. If not provided, the card is populated with any provided children.
 * ```backImg="image_path"```
     > Fills the back face of the card with the image. If not provided, the card is populated with the default card back image.
-* ```color="any CSS colour"```
-    > The background colour of the card. If not provided, the background of the card is coloured `black`. 
 * ```dimensions={{width: number, height: number, units: "mm" | "px" | "rem" | "%"}}```
-    > Sets the dimensions of the card using the CSS unit provided. If not provided, the dimensions are set to those of a standard physical playing card; 63x88mm. 
+    > Sets the dimensions of the card using the CSS unit provided. If not provided, the dimensions are set to those of a standard physical playing card; 63x88mm.
 * ```position={{x: number, y: number}}```
     > Sets the starting position of the top-left corner of the card on the page, where the top left corner of the page is (0, 0). If not provided, the card appears at (0, 0).
+    
