@@ -2,6 +2,10 @@ import './../assets/styles/ContextMenu.css';
 
 // Type Declarations //
 ///////////////////////
+type ContextMenuCardControl = {
+    callback: Function,
+    description: string
+}
 type ContextMenuPosition = {
     top: number,
     left: number
@@ -9,21 +13,25 @@ type ContextMenuPosition = {
 
 // Props Type
 interface props_ContextMenu {
+    cardControls?: ContextMenuCardControl[]
     position: ContextMenuPosition
     show: boolean
 }
 
 // Context Menu //
 //////////////////
-export function ContextMenu({position, show}: props_ContextMenu)
+export function ContextMenu({cardControls = [], position, show}: props_ContextMenu)
 {
     return (
-        <div 
+        <div className={"card_context_menu" + (show ? "" : " hidden")}
             onMouseDown={(click: any) => {click.stopPropagation()}}     // Stops the document mousedown listener from hiding the menu
-            className={"card_context_menu" + (show ? "" : " hidden")}
             style={position}
         >
-            <p>Hello World!</p>
+            <ul>
+                {cardControls.map((control, index) => (
+                    <li key={index} onClick={() => {control.callback()}}>{control.description}</li>
+                ))}
+            </ul>
         </div>
     );
 }
