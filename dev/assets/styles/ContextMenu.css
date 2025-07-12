@@ -1,8 +1,40 @@
 .card_context_menu
 {
     position: absolute;
+    
+    background-color: grey;
+    opacity: 0.9;
+
+    width: 10rem;
+
+    border: .25rem solid grey;
+    border-radius: .25em;
 }
 
 .card_context_menu.hidden{
     display: none;
+}
+
+.card_context_menu ul{
+    list-style-type: none;
+
+    padding: 0rem;
+    margin: 0rem;
+}
+
+.card_context_menu ul li{
+    cursor: pointer;
+
+    overflow-wrap: break-word;
+    overflow-x: wrap;
+
+    padding: .25rem;
+    border: .1em solid grey;
+    border-radius: .25em;
+}
+
+.card_context_menu ul li:hover{
+    background-color: lightgrey;
+
+    border: .1em solid lightgrey;
 }
