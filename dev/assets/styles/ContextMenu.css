@@ -23,6 +23,9 @@
 
     padding: 0rem;
     margin: 0rem;
+
+    user-select: none;
+    -webkit-user-select: none;
 }
 
 .card_context_menu ul li{
