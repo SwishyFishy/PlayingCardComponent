@@ -6,25 +6,22 @@ A TypeScript React component that emulates a physical playing card. The componen
 
 This package is a React component.
 
-### Basic Usage
-
-**Install** 
+### Install
 
 ```npm i animated-playing-card```
 
-**Use**
+### Import
 
 ```Javascript
 import { Card } from "animated-playing-card";
 
 <Card/>                                                 // A blank card, or one with an image
 <Card><div className="card_content">...</div><Card/>    // A card with HTML content
-
 ```
+
 Elements inside a card do not need to be contained within a ```<div>```. It is recommended, however, for ease of styling via CSS.
 
-### Card Attributes
-
+## Card Attributes
 
 * ```frontImg="image_path"```
     > Fills the front face of the card with the image. If not provided, the card is populated with any provided children.
@@ -34,4 +31,3 @@ Elements inside a card do not need to be contained within a ```<div>```. It is r
     > Sets the dimensions of the card using the CSS unit provided. If not provided, the dimensions are set to those of a standard physical playing card; 63x88mm.
 * ```position={{x: number, y: number}}```
     > Sets the starting position of the top-left corner of the card on the page, where the top left corner of the page is (0, 0). If not provided, the card appears at (0, 0).
-    
