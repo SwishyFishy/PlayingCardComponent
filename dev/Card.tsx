@@ -53,6 +53,9 @@ export function Card({
         children = undefined
     }: PropsWithChildren<props_Card>)
 {
+    // Variable Declaration //
+    //////////////////////////
+
     // Track card position and size
     const [cardPosition, setCardPosition] = useState<CardPosition>({
         top: position.y, 
@@ -115,7 +118,7 @@ export function Card({
     const dragCard = (e: MouseEvent) => {
         e.preventDefault();
 
-        // Track speed
+        // Update speed
         speedX = -(lastPosX + offsetX - e.clientX);
         speedY = -(lastPosY + offsetY - e.clientY);
         lastPosX = e.clientX - offsetX;
@@ -130,7 +133,7 @@ export function Card({
             left: e.clientX - offsetX
         });
         setCardTransform({...cardTransform,
-            transform: `rotate3d(${speedY}, ${-speedX}, 0, ${tilt}deg) scale(${scale})`,
+            transform: `scale(${scale}) rotate3d(${speedY}, ${-speedX}, 0, ${tilt}deg)`,
             boxShadow: `${-speedX / tiltShadow}rem ${-speedY / tiltShadow}rem 1rem black`
         });
     }
