@@ -97,6 +97,9 @@ export function Card({
     const grabCard = (e: React.MouseEvent) => {
         e.preventDefault();
 
+        // Hide the context menu if it's open
+        setContextMenuDisplay({...contextMenuDisplay, show: false});
+
         // Track the part of the card clicked
         offsetX = e.clientX - cardPosition.left;
         offsetY = e.clientY - cardPosition.top;
