@@ -80,6 +80,7 @@ export function Card({
 
     // Track card transformation
     const [cardTransform, setCardTransform] = useState<CardTransform>({});
+    const [scale, setScale] = useState<number>(1);
     const [flipped, setFlipped] = useState<boolean>(false);
     let tilt: number = 0;               // Angle of card in 3d space
     const tiltAmplifier: number = 2;    // Constant multiplied into tilt to exaggerate the angle
@@ -129,7 +130,7 @@ export function Card({
             left: e.clientX - offsetX
         });
         setCardTransform({...cardTransform,
-            transform: `rotate3d(${speedY}, ${-speedX}, 0, ${tilt}deg)`,
+            transform: `rotate3d(${speedY}, ${-speedX}, 0, ${tilt}deg) scale(${scale})`,
             boxShadow: `${-speedX / tiltShadow}rem ${-speedY / tiltShadow}rem 1rem black`
         });
     }
@@ -144,7 +145,7 @@ export function Card({
 
         // Remove any leftover tilt and box-shadow
         setCardPosition({...cardPosition, top: e.clientY - offsetY, left: e.clientX - offsetX});
-        setCardTransform({...cardTransform, transform: undefined, boxShadow: undefined});
+        setCardTransform({...cardTransform, transform: `scale(${scale})`, boxShadow: undefined});
     }
 
     // Flip the card
@@ -168,12 +169,14 @@ export function Card({
 
     // Enlarge the card
     const growCard = () => {
-        setCardTransform({...cardTransform});
+        setScale(scale + .05);
+        setCardTransform({...cardTransform, transform: `scale(${scale + .05})`});   // State doesn't update until next render
     }
 
     // Shrink the card
     const shrinkCard = () => {
-        setCardTransform({...cardTransform});
+        setScale(scale - .05);
+        setCardTransform({...cardTransform, transform: `scale(${scale - .05})`});   // State doesn't update until next render
     }
 
     return(
