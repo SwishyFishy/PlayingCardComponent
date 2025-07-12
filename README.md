@@ -15,11 +15,9 @@ This package is a React component.
 ```Javascript
 import { Card } from "animated-playing-card";
 
-<Card/>                                                 // A blank card, or one with an image
-<Card><div className="card_content">...</div><Card/>    // A card with HTML content
+<Card/>             // A blank card, or one with an image
+<Card><Card/>       // A card with HTML content
 ```
-
-Elements inside a card do not need to be contained within a ```<div>```. It is recommended, however, for ease of styling via CSS.
 
 ## Card Attributes
 
