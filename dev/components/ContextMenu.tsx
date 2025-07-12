@@ -2,7 +2,7 @@ import './../assets/styles/ContextMenu.css';
 
 // Type Declarations //
 ///////////////////////
-type ContextMenuCardControl = {
+export type ContextMenuCardControl = {
     callback: Function,
     description: string
 }

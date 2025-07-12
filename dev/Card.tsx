@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { type PropsWithChildren } from 'react';
 
 import { ContextMenu } from './components/ContextMenu.js';
+import { type ContextMenuCardControl } from './components/ContextMenu.js';
 
 import cardBack from './assets/img/default_card_back.jpg';
 
@@ -14,8 +15,9 @@ type CardPosition = {
     left: number,
 }
 type CardSize = {
-    width: string,
-    height: string
+    width: number,
+    height: number,
+    units: string
 }
 type CardAnimation = {
     transform?: string,
@@ -35,11 +37,12 @@ interface props_Card {
         width: number,
         height: number,
         units: "mm" | "px" | "rem" | "%"
-    }
+    },
     position?: {
         x: number,
         y: number
-    }
+    },
+    contextControls?: ContextMenuCardControl[]
 }
 
 // Card //
@@ -49,6 +52,7 @@ export function Card({
         backImg = undefined,
         dimensions = {width: 63, height: 88, units: "mm"},
         position = {x: 0, y: 0}, 
+        contextControls = [],
         children = undefined
     }: PropsWithChildren<props_Card>)
 {
@@ -58,8 +62,9 @@ export function Card({
         left: position.x, 
     });
     const [cardSize, setCardSize] = useState<CardSize>({
-        width: dimensions.width.toString() + dimensions.units,
-        height: dimensions.height.toString() + dimensions.units,
+        width: dimensions.width,
+        height: dimensions.height,
+        units: dimensions.units
     });
     const [cardAnimation, setCardAnimation] = useState<CardAnimation>({});
     const [contextMenuDisplay, setContextMenuDisplay] = useState<ContextMenuDisplay>({
@@ -162,13 +167,23 @@ export function Card({
         }, {once: true});
     }
 
+    // Enlarge the card
+    const growCard = () => {
+        setCardSize({...cardSize, width: cardSize.width + 5, height: cardSize.height + 5});
+    }
+
+    // Shrink the card
+    const shrinkCard = () => {
+        setCardSize({...cardSize, width: cardSize.width - 5, height: cardSize.height - 5});
+    }
+
     return(
         <>
             <div className="card" 
                 onContextMenu={(click: any) => {showCardContext(click)}}
                 onDoubleClick={(click: any) => {flipCard(click)}} 
                 onMouseDown={(click: any) => {click.button == 0 && grabCard(click)}}
-                style={{...cardPosition, ...cardSize, ...cardAnimation}}
+                style={{...cardPosition, ...cardAnimation, width: cardSize.width.toString() + cardSize.units, height: cardSize.height.toString() + cardSize.units}}
             >
                 <div className={`card-front ` + (isFlipped ? "card-back-face" : "")}>
                     {frontImg ? <img src={frontImg} className="card_img" alt="Front Face"/> : children}
@@ -177,7 +192,14 @@ export function Card({
                     <img src={backImg ? backImg : cardBack} className="card_img" alt="Back Face"/>
                 </div>
             </div>
-            <ContextMenu show={contextMenuDisplay.show} position={{top: contextMenuDisplay.top, left: contextMenuDisplay.left}}/>
+            <ContextMenu
+                cardControls={[...contextControls,
+                    {callback: growCard, description: "Zoom In"}, 
+                    {callback: shrinkCard, description: "Zoom Out"}
+                ]}
+                position={{top: contextMenuDisplay.top, left: contextMenuDisplay.left}}
+                show={contextMenuDisplay.show}
+            />
         </>
     );
 }
