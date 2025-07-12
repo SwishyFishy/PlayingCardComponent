@@ -183,12 +183,12 @@ export function Card({
                 onContextMenu={(click: any) => {showCardContext(click)}}
                 onDoubleClick={(click: any) => {flipCard(click)}} 
                 onMouseDown={(click: any) => {click.button == 0 && grabCard(click)}}
-                style={{...cardPosition, ...cardAnimation, width: cardSize.width.toString() + cardSize.units, height: cardSize.height.toString() + cardSize.units}}
+                style={{...cardPosition, ...cardAnimation, width: `${cardSize.width}${cardSize.units}`, height: `${cardSize.height}${cardSize.units}`}}
             >
-                <div className={`card-front ` + (isFlipped ? "card-back-face" : "")}>
+                <div className={`card-front ${(isFlipped ? "card-back-face" : "")}`}>
                     {frontImg ? <img src={frontImg} className="card_img" alt="Front Face"/> : children}
                 </div>
-                <div className={`card-back ` + (isFlipped ? "" : "card-back-face")}>
+                <div className={`card-back ${(isFlipped ? "" : "card-back-face")}`}>
                     <img src={backImg ? backImg : cardBack} className="card_img" alt="Back Face"/>
                 </div>
             </div>
