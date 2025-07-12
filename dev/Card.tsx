@@ -13,13 +13,10 @@ import './assets/styles/Card.css';
 type CardPosition = {
     top: number,
     left: number,
+    width: string,
+    height: string,
 }
-type CardSize = {
-    width: number,
-    height: number,
-    units: string
-}
-type CardAnimation = {
+type CardTransform = {
     transform?: string,
     boxShadow?: string
 }
@@ -56,39 +53,41 @@ export function Card({
         children = undefined
     }: PropsWithChildren<props_Card>)
 {
-    // State for tracking card details
+    // Track card position and size
     const [cardPosition, setCardPosition] = useState<CardPosition>({
         top: position.y, 
-        left: position.x, 
+        left: position.x,
+        width: `${dimensions.width}${dimensions.units}`,
+        height: `${dimensions.height}${dimensions.units}`
     });
-    const [cardSize, setCardSize] = useState<CardSize>({
-        width: dimensions.width,
-        height: dimensions.height,
-        units: dimensions.units
-    });
-    const [cardAnimation, setCardAnimation] = useState<CardAnimation>({});
+
+    // Track context menu position and visibility
     const [contextMenuDisplay, setContextMenuDisplay] = useState<ContextMenuDisplay>({
         top: position.y, 
         left: position.x,
         show: false
     })
 
-    // Variables for tracking which part of the card the user grabbed
+    // Track where on the card the user selected it
     let offsetX: number = 0;            // Distance between card left property and the position of the cursor when card is grabbed
     let offsetY: number = 0;            // Distance between card top property and the position of the cursor when card is grabbed
 
-    // Variables for tracking card movement speed
+    // Track card movement and speed
     let lastPosX: number = 0;           // Card left property value in previous tick whilst dragging card
     let lastPosY: number = 0;           // Card top property value in previous tick whilst dragging card
     let speedX: number = 0;             // Number of pixels traversed by card in X direction during this tick
     let speedY: number = 0;             // Number of pixels traversed by card in Y direction during this tick
 
-    // Variables for tracking card angle in 3d space
-    const [isFlipped, setIsFlipped] = useState<boolean>(false);
+    // Track card transformation
+    const [cardTransform, setCardTransform] = useState<CardTransform>({});
+    const [flipped, setFlipped] = useState<boolean>(false);
     let tilt: number = 0;               // Angle of card in 3d space
     const tiltAmplifier: number = 2;    // Constant multiplied into tilt to exaggerate the angle
     const tiltShadow: number = 20;      // Constant reciprocal multiplied into speed to adjust box-shadow to follow card
     const tiltMax: number = 45;         // Constant maximum allowable value of tilt * tiltAmplifier
+
+    // Event Handlers //
+    ////////////////////
 
     // Grab the card with the cursor
     const grabCard = (e: React.MouseEvent) => {
@@ -102,7 +101,7 @@ export function Card({
         lastPosX = e.clientX - offsetX;
         lastPosY = e.clientY - offsetY;
 
-        setCardAnimation({...cardAnimation, boxShadow: `0rem 0rem 1rem black`});
+        setCardTransform({...cardTransform, boxShadow: `0rem 0rem 1rem black`});
 
         // Create an event handler to call dragCard when the mouse moves
         document.addEventListener('mousemove', dragCard);
@@ -129,7 +128,7 @@ export function Card({
             top: e.clientY - offsetY, 
             left: e.clientX - offsetX
         });
-        setCardAnimation({...cardAnimation,
+        setCardTransform({...cardTransform,
             transform: `rotate3d(${speedY}, ${-speedX}, 0, ${tilt}deg)`,
             boxShadow: `${-speedX / tiltShadow}rem ${-speedY / tiltShadow}rem 1rem black`
         });
@@ -145,14 +144,14 @@ export function Card({
 
         // Remove any leftover tilt and box-shadow
         setCardPosition({...cardPosition, top: e.clientY - offsetY, left: e.clientX - offsetX});
-        setCardAnimation({...cardAnimation, transform: undefined, boxShadow: undefined});
+        setCardTransform({...cardTransform, transform: undefined, boxShadow: undefined});
     }
 
     // Flip the card
     const flipCard = (e: React.MouseEvent) => {
         e.preventDefault();
 
-        setIsFlipped(!isFlipped);
+        setFlipped(!flipped);
     }
 
     // Show the card context menu
@@ -169,12 +168,12 @@ export function Card({
 
     // Enlarge the card
     const growCard = () => {
-        setCardSize({...cardSize, width: cardSize.width + 5, height: cardSize.height + 5});
+        setCardTransform({...cardTransform});
     }
 
     // Shrink the card
     const shrinkCard = () => {
-        setCardSize({...cardSize, width: cardSize.width - 5, height: cardSize.height - 5});
+        setCardTransform({...cardTransform});
     }
 
     return(
@@ -183,12 +182,12 @@ export function Card({
                 onContextMenu={(click: any) => {showCardContext(click)}}
                 onDoubleClick={(click: any) => {flipCard(click)}} 
                 onMouseDown={(click: any) => {click.button == 0 && grabCard(click)}}
-                style={{...cardPosition, ...cardAnimation, width: `${cardSize.width}${cardSize.units}`, height: `${cardSize.height}${cardSize.units}`}}
+                style={{...cardPosition, ...cardTransform}}
             >
-                <div className={`card-front ${(isFlipped ? "card-back-face" : "")}`}>
+                <div className={`card-front ${(flipped ? "card-back-face" : "")}`}>
                     {frontImg ? <img src={frontImg} className="card_img" alt="Front Face"/> : children}
                 </div>
-                <div className={`card-back ${(isFlipped ? "" : "card-back-face")}`}>
+                <div className={`card-back ${(flipped ? "" : "card-back-face")}`}>
                     <img src={backImg ? backImg : cardBack} className="card_img" alt="Back Face"/>
                 </div>
             </div>
