@@ -180,7 +180,7 @@ export function Card({
     const shrinkCard = () => {
         let newScale: number = scale > 0.05 ? scale - 0.05 : scale;
         setScale(newScale);
-        setCardTransform({...cardTransform, transform: `scale(${newScale})`});   // State doesn't update until next render
+        setCardTransform({...cardTransform, transform: `scale(${newScale})`});      // State doesn't update until next render
     }
 
     return(
