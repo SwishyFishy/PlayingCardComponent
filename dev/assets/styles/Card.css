@@ -2,7 +2,6 @@
     position: absolute;
 
     color: white;
-    background-color: black;
 
     text-align: center;
 }
@@ -15,6 +14,8 @@
     transition: transform 0.5s;
     transform-style: preserve-3d;
     backface-visibility: hidden;
+
+    background-color: black;
 
     overflow: scroll;
     scrollbar-width: none;
