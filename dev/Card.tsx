@@ -97,9 +97,6 @@ export function Card({
     const grabCard = (e: React.MouseEvent) => {
         e.preventDefault();
 
-        // Hide the context menu if it's open
-        setContextMenuDisplay({...contextMenuDisplay, show: false});
-
         // Track the part of the card clicked
         offsetX = e.clientX - cardPosition.left;
         offsetY = e.clientY - cardPosition.top;
@@ -166,6 +163,11 @@ export function Card({
         e.preventDefault();
 
         setContextMenuDisplay({...contextMenuDisplay, top: e.clientY, left: e.clientX, show: true});
+
+        // Create an event listener on the document to close the context menu and remove the event listener on click
+        document.addEventListener('mousedown', () => {
+            setContextMenuDisplay({...contextMenuDisplay, show: false});
+        }, {once: true});
     }
 
     return(

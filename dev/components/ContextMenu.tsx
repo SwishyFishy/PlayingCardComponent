@@ -19,6 +19,7 @@ export function ContextMenu({position, show}: props_ContextMenu)
 {
     return (
         <div 
+            onMouseDown={(click: any) => {click.stopPropagation()}}     // Stops the document mousedown listener from hiding the menu
             className={"card_context_menu" + (show ? "" : " hidden")}
             style={position}
         >
