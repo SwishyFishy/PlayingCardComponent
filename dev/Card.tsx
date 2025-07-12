@@ -108,10 +108,10 @@ export function Card({
         setCardAnimation({...cardAnimation, boxShadow: `.5rem .5rem 2rem black`});
 
         // Create an event handler to call dragCard when the mouse moves
-        document.onmousemove = (move: MouseEvent) => {dragCard(move)};
+        document.addEventListener('mousemove', dragCard);
 
         // Create an event handler to free the move event handler when the mouse button is released
-        document.onmouseup = (release: MouseEvent) => {releaseCard(release)};
+        document.addEventListener('mouseup', releaseCard);
     }
 
     // Move the card around
@@ -142,8 +142,9 @@ export function Card({
     const releaseCard = (e: MouseEvent) => {
         e.preventDefault();
 
-        document.onmousemove = null;
-        document.onmouseup = null;
+        // Remove the card-movement event handlers
+        document.removeEventListener('mousemove', dragCard);
+        document.removeEventListener('mouseup', releaseCard);
 
         // Remove any leftover tilt and box-shadow
         setCardPosition({...cardPosition, top: e.clientY - offsetY, left: e.clientX - offsetX});
