@@ -32,4 +32,4 @@ Elements inside a card do not need to be contained within a ```<div>```. It is r
 * ```position={{x: number, y: number}}```
     > Sets the starting position of the top-left corner of the card on the page, where the top left corner of the page is (0, 0). If not provided, the card appears at (0, 0).
 * ```contextControls={[{callback: Function, description: string}, ...]}```
-  > Adds each provided callback function to the right-click context menu of the card, assigned to the onClick event of a button with the description as its label
+  > Adds each provided callback function to the right-click context menu of the card, assigned to the onClick event of a button with the description as its label.
