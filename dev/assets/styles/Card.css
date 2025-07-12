@@ -2,6 +2,7 @@
     position: absolute;
 
     color: white;
+    background-color: black;
 
     text-align: center;
 }
@@ -14,9 +15,6 @@
     transition: transform 0.5s;
     transform-style: preserve-3d;
     backface-visibility: hidden;
-
-    border: .5em solid black;
-    border-radius: .5em;
 
     overflow: scroll;
     scrollbar-width: none;

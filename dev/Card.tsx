@@ -97,7 +97,7 @@ export function Card({
         lastPosX = e.clientX - offsetX;
         lastPosY = e.clientY - offsetY;
 
-        setCardAnimation({...cardAnimation, boxShadow: `.5rem .5rem 2rem black`});
+        setCardAnimation({...cardAnimation, boxShadow: `0rem 0rem 1rem black`});
 
         // Create an event handler to call dragCard when the mouse moves
         document.addEventListener('mousemove', dragCard);
@@ -126,7 +126,7 @@ export function Card({
         });
         setCardAnimation({...cardAnimation,
             transform: `rotate3d(${speedY}, ${-speedX}, 0, ${tilt}deg)`,
-            boxShadow: `${.5 + -speedX / tiltShadow}rem ${.5 + -speedY / tiltShadow}rem 1rem black`
+            boxShadow: `${-speedX / tiltShadow}rem ${-speedY / tiltShadow}rem 1rem black`
         });
     }
 
