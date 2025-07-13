@@ -183,6 +183,16 @@ export function Card({
         setCardTransform({...cardTransform, transform: `scale(${newScale})`});      // State doesn't update until next render
     }
 
+    // Clone the card
+    /*const cloneCard = () => {
+        const card: Element = document.getElementsByClassName("card")[0];
+		const copy: Node = card.cloneNode(true);
+        copy.addEventListener('contextmenu', (click: any) => {showCardContext(click)});
+        copy.addEventListener('doubleclick', (click: any) => {flipCard(click)});
+        copy.addEventListener('mousedown', (click: any) => {click.button == 0 && grabCard(click)});
+		card.parentNode!.insertBefore(copy, card);
+    }*/
+
     return(
         <>
             <div className="card" 
@@ -201,7 +211,8 @@ export function Card({
             <ContextMenu
                 cardControls={[...contextControls,
                     {callback: growCard, description: "Zoom In"}, 
-                    {callback: shrinkCard, description: "Zoom Out"}
+                    {callback: shrinkCard, description: "Zoom Out"}/*,
+                    {callback: cloneCard, description: "Clone"}*/
                 ]}
                 position={{top: contextMenuDisplay.top, left: contextMenuDisplay.left}}
                 show={contextMenuDisplay.show}
