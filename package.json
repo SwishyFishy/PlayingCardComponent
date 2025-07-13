@@ -1,6 +1,6 @@
 {
   "name": "animated-playing-card",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "type": "module",
   "description": "A user-interactable playing card component which animates to reflect its own movement.",
   "license": "ISC",
