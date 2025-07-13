@@ -1,6 +1,6 @@
 .card_context_menu
 {
-    position: absolute;
+    position: fixed;
     
     background-color: grey;
     opacity: 0.9;
