@@ -9,11 +9,12 @@ export function CardController({children}: PropsWithChildren)
             {
                 console.log('yes', child);
             }
-            else{
+            else
+            {
                 console.log('no', child);
-                if (typeof child == "Object" && child.props)
+                if (typeof child == "object" && 'props' in child!)
                 {
-                    iterateChildren(child!.props.children);
+                    iterateChildren((child! as {props: any}).props.children);
                 }
             }
         });
