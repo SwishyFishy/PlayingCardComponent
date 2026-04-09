@@ -4,11 +4,13 @@
     "jsx": "react-jsx",
     "module": "nodenext",
     "declaration": true,
+    "rootDir": "../",
     "outDir": "dist",
     "esModuleInterop": true,
     "moduleResolution": "nodenext",
     "forceConsistentCasingInFileNames": true,
     "allowSyntheticDefaultImports": true,
+    "noUncheckedSideEffectImports": false,
     "strict": true,
     "skipLibCheck": true
   }
